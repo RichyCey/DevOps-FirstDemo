@@ -25,12 +25,13 @@ SECRET_KEY = 'django-insecure-om67l_geojny1ju8xohwrglyyj9%xtd$ti+6$28+%qx5uhyjg-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "task-dns.pp.ua", "34.207.48.198", "roman-demo.pp.ua"]v
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'django_jenkins',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,6 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'first_demo'
 ]
+
+JENKINS_TASKS = ('django_jenkins.tasks.run_pylint',
+                 'django_jenkins.tasks.run_pep8',
+                 'django_jenkins.tasks.run_pyflakes',
+                 'django_jenkins.tasks.with_coverage',
+                 'django_jenkins.tasks.django_tests',)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
