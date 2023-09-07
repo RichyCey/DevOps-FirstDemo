@@ -14,7 +14,7 @@ pipeline {
         stage("Build"){
             steps {
                 sshagent(credentials : ['jenkins-slave']){
-                    sh "ssh ec2-user@ec2-34-207-48-198.compute-1.amazonaws.com sudo git -C /var/www/html pull https://github.com/RichyCey/DevOps-FirstDemo.git"
+                    sh "ssh ec2-user@ec2-34-207-48-198.compute-1.amazonaws.com sudo git -C /var/www/html pull --rebase --autostash https://github.com/RichyCey/DevOps-FirstDemo.git"
                 }
             }
         }
