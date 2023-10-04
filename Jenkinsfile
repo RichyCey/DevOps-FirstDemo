@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    envirovment {
+    environment {
         AWS_ACCOUNT_ID = env.AWS_ACCOUNT_ID
     }
     stages {
