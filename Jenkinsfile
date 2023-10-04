@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    envirovment {
+        AWS_ACCOUNT_ID = env.AWS_ACCOUNT_ID
+    }
     stages {
         stage("Clean Up"){
             steps {
@@ -9,8 +12,7 @@ pipeline {
         stage('Set AWS_ACCOUNT_ID') {
         steps {
             script {
-                def myVariableValue = env.AWS_ACCOUNT_ID
-                echo "MY_VARIABLE: ${myVariableValue}"
+                echo "MY_VARIABLE: ${AWS_ACCOUNT_ID}"
             }
         }
     }
