@@ -21,9 +21,8 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                sshagent(credentials : ['jenkins-slave']){
-                    sh 'ssh ec2-user@ec2-34-207-48-198.compute-1.amazonaws.com cd /var/www/html'
-                    sh 'ssh ec2-user@ec2-34-207-48-198.compute-1.amazonaws.com sudo docker build -t demo_app:demo_app_tag .'
+                sshagent(credentials: ['jenkins-slave']) {
+                    sh 'ssh ec2-user@ec2-34-207-48-198.compute-1.amazonaws.com "cd /var/www/html && sudo docker build -t demo_app:demo_app_tag ."'
                 }
             }
         }
