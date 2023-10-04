@@ -41,7 +41,7 @@ pipeline {
                     sh "ssh ec2-user@ec2-34-207-48-198.compute-1.amazonaws.com 'aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | sudo docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${}'"
                     //sh "ssh ec2-user@ec2-34-207-48-198.compute-1.amazonaws.com sudo dockerImage = docker.build '${IMAGE_REPO_NAME}:${IMAGE_TAG}'"
                     sh "ssh ec2-user@ec2-34-207-48-198.compute-1.amazonaws.com 'cd /var/www/html && sudo docker build --tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} .'"
-                    sh "ssh ec2-user@ec2-34-207-48-198.compute-1.amazonaws.com sudo docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_NAME}:$IMAGE_TAG"
+                    sh "ssh ec2-user@ec2-34-207-48-198.compute-1.amazonaws.com sudo docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URL}:$IMAGE_TAG"
                     sh "ssh ec2-user@ec2-34-207-48-198.compute-1.amazonaws.com sudo docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
                 }
             }
