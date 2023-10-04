@@ -6,11 +6,20 @@ pipeline {
                 deleteDir()
             }
         }
+        stage('Set AWS_ACCOUNT_ID') {
+        steps {
+            script {
+                AWS_ACCOUNT_ID = credentials('AWS_ACCOUNT_ID')
+                if (AWS_ACCOUNT_ID == null) {
+                    error("AWS_ACCOUNT_ID not found. Please configure it in Jenkins credentials.")
+                }
+                echo "AWS_ACCOUNT_ID: ${AWS_ACCOUNT_ID}"
+            }
+        }
+    }
         stage("Clone Repo"){
             steps {
                 sh "git clone https://github.com/RichyCey/DevOps-FirstDemo.git"
-                AWS_ACCOUNT_ID = credentials('AWS_ACCOUNT_ID')
-                echo "AWS_ACCOUNT_ID: ${AWS_ACCOUNT_ID}"
             }
         }
         stage("Build"){
