@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        AWS_ACCOUNT_ID = env.AWS_ACCOUNT_ID
+        AWS_ACCOUNT_ID = "${env.AWS_ACCOUNT_ID}"
     }
     stages {
         stage("Clean Up"){
