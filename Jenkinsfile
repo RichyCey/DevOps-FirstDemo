@@ -14,20 +14,9 @@ pipeline {
                 deleteDir()
             }
         }
-        stage('Set AWS_ACCOUNT_ID') {
-            steps {
-                script {
-                    echo "MY_VARIABLE: ${AWS_ACCOUNT_ID}, ${AWS_DEFAULT_REGION}, ${NAME}, ${IMAGE_REPO_NAME}, ${IMAGE_TAG}, ${REPOSITORY_URL}"
-                }
-            }
-        }
         stage("Clone Repo") {
             steps {
                 sh "git clone https://github.com/RichyCey/DevOps-FirstDemo.git"
-            }
-        }
-        stage("Build") {
-            steps {
                 sshagent(credentials: ['jenkins-slave']) {
                     sh "ssh ec2-user@ec2-34-207-48-198.compute-1.amazonaws.com sudo git -C /var/www/html pull --rebase --autostash https://github.com/RichyCey/DevOps-FirstDemo.git"
                     sh "ssh ec2-user@ec2-34-207-48-198.compute-1.amazonaws.com sudo chown -R ec2-user:ec2-user /var/www/html"
