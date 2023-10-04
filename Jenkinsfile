@@ -1,9 +1,20 @@
 pipeline {
     agent any
+    environment {
+        AWS_DEFAULT_REGION = 'us-east-1'
+        AWS_ACCOUNT_ID = credentials('AWS_ACCOUNT_ID')
+    }
     stages {
         stage("Clean Up"){
             steps {
                 deleteDir()
+            }
+        }
+        stage('Print AWS_ACCOUNT_ID') {
+            steps {
+                script {
+                    echo "AWS_ACCOUNT_ID: ${AWS_ACCOUNT_ID}"
+                }
             }
         }
         stage("Clone Repo"){
