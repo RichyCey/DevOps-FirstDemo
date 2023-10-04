@@ -2,6 +2,11 @@ pipeline {
     agent any
     environment {
         AWS_ACCOUNT_ID = "${env.AWS_ACCOUNT_ID}"
+        AWS_DEFAULT_REGION = "${env.REGION}"
+        NAME = "${env.NAME}"
+        IMAGE_REPO_NAME = "demo-app"
+        IMAGE_TAG = "ver${env.BUILD_NUMBER}"
+        REPOSITORY_URL = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
     }
     stages {
         stage("Clean Up"){
@@ -12,7 +17,7 @@ pipeline {
         stage('Set AWS_ACCOUNT_ID') {
         steps {
             script {
-                echo "MY_VARIABLE: ${AWS_ACCOUNT_ID}"
+                echo "MY_VARIABLE: ${AWS_ACCOUNT_ID}, ${AWS_DEFAULT_REGION}, ${NAME}, ${IMAGE_REPO_NAME}, ${IMAGE_TAG}, ${REPOSITORY_URL}"
             }
         }
     }
