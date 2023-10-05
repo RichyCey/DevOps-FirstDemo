@@ -50,3 +50,8 @@ resource "aws_ecs_service" "service" {
     ignore_changes = [task_definition]
   }
 }
+
+data "aws_secretsmanager_secret_version" "creds" {
+  # Fill in the name you gave to your secret
+  secret_id = "terraform_keys"
+}
