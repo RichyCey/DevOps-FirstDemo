@@ -41,7 +41,8 @@ pipeline {
             steps {
                 script {
                     sshagent(credentials: ['jenkins-slave']) {
-                        sh "ssh ec2-user@ec2-34-207-48-198.compute-1.amazonaws.com aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
+                        sh "ssh ec2-user@ec2-34-207-48-198.compute-1.amazonaws.com 'aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | sudo docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${}'"
+
                     }
                 }
             }
