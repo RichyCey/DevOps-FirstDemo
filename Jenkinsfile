@@ -37,6 +37,15 @@ pipeline {
                 }
             }
         }
+        stage('Authenticate with AWS ECR') {
+            steps {
+                script {
+                    sshagent(credentials: ['jenkins-slave']) {
+                        sh "aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
+                    }
+                }
+            }
+        }
         stage('Push Docker Image to ECR') {
             steps {
                 sshagent(credentials: ['jenkins-slave']) {
