@@ -7,6 +7,8 @@ pipeline {
         IMAGE_REPO_NAME = "demo-app"
         IMAGE_TAG = "ver${env.BUILD_NUMBER}"
         REPOSITORY_URL = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
+        T_ACCESS_KEY = "${TERRAFORM_ACCESS_KEY}"
+        T_S_ACCESS_KEY = "${TERRAFORM_SECRET_ACCESS_KEY}"
     }
     stages {
         stage("Clean Up") {
@@ -53,6 +55,11 @@ pipeline {
                     sh "ssh ec2-user@ec2-34-207-48-198.compute-1.amazonaws.com 'sudo docker push ${REPOSITORY_URL}:${IMAGE_TAG}'"
                 }
             }
+        }
+        stage("Terraform") {
+            sh "ssh ec2-user@ec2-34-207-48-198.compute-1.amazonaws.com 'cd /var/www/html && echo '''aws_access_key = '${T_ACCESS_KEY}'
+aws_secret_key = '${T_S_ACCESS_KEY}'''' > awsVars.auto.tfvars'"
+
         }
         stage('Check Website') {
             steps {
