@@ -59,7 +59,7 @@ pipeline {
         stage("Terraform") {
             steps {
                 sshagent(credentials: ['jenkins-slave']) {
-                    sh "ssh ec2-user@ec2-34-207-48-198.compute-1.amazonaws.com 'cd /var/www/html && sudo echo '''aws_access_key = "${T_ACCESS_KEY}"''' > awsVars.auto.tfvars && sudo echo '''aws_secret_key = "${T_S_ACCESS_KEY}" >> awsVars.auto.tfvars''''"
+                    sh "ssh ec2-user@ec2-34-207-48-198.compute-1.amazonaws.com echo 1"
                 }
             }
         }
