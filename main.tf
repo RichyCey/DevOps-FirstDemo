@@ -17,8 +17,8 @@ resource "aws_ecs_task_definition" "task" {
   container_definitions    = <<DEFINITION
   [
     {
-      "name"      : "demo-app",
-      "image"     : "584934534486.dkr.ecr.us-east-1.amazonaws.com/demo-app:ver150",
+      "name"      : "nginx",
+      "image"     : "nginx:1.23.1",
       "cpu"       : 512,
       "memory"    : 2048,
       "essential" : true,

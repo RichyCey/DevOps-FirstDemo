@@ -11,6 +11,7 @@ terraform {
   }
 }
 
+
 # configuring docker and aws as providers
 provider "docker" {}
 
