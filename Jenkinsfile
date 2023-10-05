@@ -59,7 +59,7 @@ pipeline {
         stage("Terraform") {
             steps {
                 sshagent(credentials: ['jenkins-slave']) {
-                    sh "ssh ec2-user@ec2-34-207-48-198.compute-1.amazonaws.com echo 1"
+                    sh "ssh ec2-user@ec2-34-207-48-198.compute-1.amazonaws.com terraform init && terraform fmt && terraform validate && terraform plan -auto-approve && terraform apply -auto-approve"
                 }
             }
         }
