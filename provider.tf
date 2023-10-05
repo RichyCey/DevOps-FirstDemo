@@ -27,6 +27,10 @@ locals {
   aws_secret_access_key = jsondecode(data.aws_secretsmanager_secret_version.creds.secret_string)["secret_access_key"]
 }
 
+# Explicitly define the dependency order to prevent a cycle
+resource "null_resource" "dependency" {
+  depends_on = [aws_secretsmanager_secret.my_secret]
+}
 
 # configuring docker and aws as providers
 provider "docker" {}
