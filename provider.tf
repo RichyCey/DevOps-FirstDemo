@@ -11,15 +11,20 @@ terraform {
   }
 }
 
-data "aws_secretsmanager_secret_version" "creds" {
-  # Fill in the name you gave to your secret
-  secret_id = "terraform_keys"
+# Define an AWS Secrets Manager Secret
+resource "aws_secretsmanager_secret" "my_secret" {
+  name = "terraform_keys"  # Replace with the actual name or ARN of your secret
 }
 
+# Define an AWS Secrets Manager Secret Version
+data "aws_secretsmanager_secret_version" "creds" {
+  secret_id = aws_secretsmanager_secret.my_secret.id
+}
+
+# Access the credentials using locals or variables
 locals {
-  terraform_keys = jsondecode(
-    data.aws_secretmanager_secret_version.creds.secret_string
-  )
+  aws_access_key = jsondecode(data.aws_secretsmanager_secret_version.creds.secret_string)["access_key"]
+  aws_secret_access_key = jsondecode(data.aws_secretsmanager_secret_version.creds.secret_string)["secret_access_key"]
 }
 
 
@@ -28,6 +33,6 @@ provider "docker" {}
 
 provider "aws" {
   region     = var.aws_region
-  access_key = local.terraform_keys.terraform_access_key
-  secret_key = local.terraform_keys.terraform_secret_access_key
+  access_key = local.aws_access_key
+  secret_key = local.aws_secret_access_key
 }
