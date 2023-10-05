@@ -1,2 +1,8 @@
-aws_access_key = "AKIAYQMGQVVLJWBS6LYS"
-aws_secret_key = "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"
+locals {
+  terraform_keys = jsondecode(
+    data.aws_secretmanager_secret_version.creds.secret_string
+  )
+}
+
+aws_access_key = local.terraform_keys.terraform_access_key
+aws_secret_key = local.terraform_keys.terraform_secret_access_key
